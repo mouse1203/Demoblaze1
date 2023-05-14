@@ -3,7 +3,6 @@ from setuptools import setup
 setup(
     name='Demoblaze',
     version='1.0.0',
-    packages=['your_package'],
     install_requires=[
         'pytest >= 7.3.1',
         'pytest-asyncio >= 0.21.0',
