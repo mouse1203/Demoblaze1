@@ -33,3 +33,4 @@ jobs:
       with:
         name: report
         path: tests/report
+        run: pytest --template=html1/index.html --report=report.html
