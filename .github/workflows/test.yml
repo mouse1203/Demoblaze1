@@ -25,6 +25,9 @@ jobs:
         pip install -e .
     - name: Ensure browsers are installed
       run: python -m playwright install --with-deps
+    - name: Install pytest-reporter-html1
+      run: |
+        pip install pytest-reporter-html1
     - name: Test with pytest
       run: |
         pytest tests --template=html1/index.html --report=report.html
