@@ -224,11 +224,12 @@ def test_add_items_into_cart(browser: Page, username, password, n_item, before):
         print("Added product: " + str(i))
 
     with browser.expect_navigation(url=re.compile(".*/cart.html.*")):
-        browser.get_by_role("link", name="Cart", exact=True).click()
+        browser.get_by_role("link", name="Cart").click() #, exact=True
     expect(browser).to_have_url(URL +"cart.html")
     
     cart_list = browser.get_by_role("table")
     expect(cart_list).to_be_visible()
+    time.sleep(5)
     # verify that total items in the cart to be increased
     expect(cart_list.locator('//tr[@class="success"]')).to_have_count(count_of_item_before + n_item)
     

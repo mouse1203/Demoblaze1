@@ -39,3 +39,7 @@ To run all the scripts with default setting simply type:
     pytest --template=html1/index.html --report=report.html
 
 ## GitHub Actions
+
+## Additional links
+
+https://drive.google.com/drive/folders/1PBmEBkONCdK9oGTLp6VAVzTicZOTo-MA?usp=sharing
