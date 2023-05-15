@@ -241,6 +241,7 @@ def test_price_items_into_cart(browser: Page, username, password, before):
     delete_first_item_from_cart(browser)
     time.sleep(1)
     total_price_showed = browser.locator("#totalp")
+    time.sleep(1)
     total_price_showed = total_price_showed.inner_text()
     if check_count_of_items_cart(browser)>0:
         total_price_calc = check_total_sum(browser)
