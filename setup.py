@@ -10,5 +10,6 @@ setup(
         'pytest-reporter >=  0.5.2',
         'pytest-reporter-html1 >= 0.8.2',
         'playwright >= 1.33.0',
+        'pytest-progress >=1.2.5',
     ],
 )    
