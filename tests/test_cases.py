@@ -2,7 +2,6 @@
 import random
 import re
 import time
-#import asyncio
 import pytest
 import pytest_playwright
 from playwright.sync_api import expect, Page
@@ -22,7 +21,6 @@ def fill_in_login_form(browser: Page, username, password):
     browser.locator("#loginpassword").click()
     browser.locator("#loginpassword").fill(password)
     
-
 
 def fill_in_signup_form(browser: Page, username, password):
     browser.get_by_label("Username:").click()
@@ -90,7 +88,6 @@ def test_signup_user_exist(browser: Page, username, password, before):
     assert  expected_message in dialog_messages   
     
 
-
 def test_user_login(browser: Page, username, password,before, after):
     """"verify log in """
 
@@ -102,7 +99,6 @@ def test_user_login(browser: Page, username, password,before, after):
     expected_text = f"Welcome {username}"
     expect(browser.get_by_role("link").nth(5)).to_have_text(expected_btn)
     expect(browser.get_by_role("link").nth(6)).to_have_text(expected_text)
-
 
 
 @pytest.mark.parametrize(
@@ -157,7 +153,6 @@ def add_item_to_cart(browser, id=None):
         time.sleep(1)        
         browser.goto(URL)
         time.sleep(1)    
-        
         
 
 def get_product_name(browser, id=None):
@@ -239,7 +234,8 @@ def test_add_items_into_cart(browser: Page, username, password, n_item, before):
     
 
 def test_price_items_into_cart(browser: Page, username, password, before):
-    
+    """verify that total price correct"""
+
     user_login(browser, username, password)
     browser.goto(url=URL_CART, wait_until='domcontentloaded')
     delete_first_item_from_cart(browser)
@@ -253,7 +249,6 @@ def test_price_items_into_cart(browser: Page, username, password, before):
     else:
         assert not total_price_showed
     
-
 
 def fill_place_order_form(browser, name, card):
     browser.locator("#name").click()
@@ -270,8 +265,14 @@ def fill_place_order_form(browser, name, card):
     browser.get_by_label("Year:").fill("yyyy")
 
 
-
-def test_place_order(browser: Page, username, password, before, name="test order", card="card"):
+@pytest.mark.parametrize(
+    "name, card",
+    [
+        ("test order", "card"),
+    ],
+)
+def test_place_order(browser: Page, username, password, name, card, before):
+    """verify that order will be placed"""
 
     user_login(browser, username, password)
     browser.goto(url=URL_CART, wait_until='networkidle')
@@ -292,15 +293,14 @@ def test_place_order(browser: Page, username, password, before, name="test order
     message = alert.locator("h2")
     expect(message).to_contain_text("Thank you for your purchase!")
     btn_confirm = alert.get_by_role("button", name="OK")
+    time.sleep(2)
     with browser.expect_navigation(url=re.compile(URL +"index.html")):
-        with browser.expect_navigation(url=re.compile(URL +"index.html")):
-            btn_confirm.click()
-            expect(alert).not_to_be_visible()
-            expect(place_order_form).not_to_be_visible()
+        btn_confirm.click()
+        expect(alert).not_to_be_visible()
+        expect(place_order_form).not_to_be_visible()        
     #rediraction to main page    
     expect(browser).to_have_url(URL +"index.html")
     
-
 
 @pytest.mark.parametrize(
     "name, card",

@@ -27,7 +27,7 @@ jobs:
       run: python -m playwright install --with-deps
     - name: Test with pytest
       run: |
-        pytest
+        pytest tests --template=html1/index.html --report=report.html
     - name: Upload sample report
       uses: actions/upload-artifact@v1
       with:
